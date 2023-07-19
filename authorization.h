@@ -2,6 +2,9 @@
 #define QT_HTTP_SERVICE_AUTHORIZATION_H
 
 #include <QDialog>
+#include <QStatusBar>
+
+#include "mainwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Authorization; }
@@ -21,6 +24,8 @@ private slots:
 
 private:
     Ui::Authorization *ui;
+    QStatusBar *bar;
+    MainWindow *mainWindow;
 };
 
 

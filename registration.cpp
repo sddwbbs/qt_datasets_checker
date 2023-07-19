@@ -43,7 +43,7 @@ void Registration::create() {
     selectQuery.addBindValue(username);
 
     if (!selectQuery.exec()) {
-        bar->showMessage("error while querying data");
+        bar->showMessage("error while querying data", 2500);
         return;
     }
 

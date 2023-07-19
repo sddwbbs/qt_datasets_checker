@@ -67,7 +67,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="PasswordLedit"/>
+      <widget class="KPasswordLineEdit" name="PasswordLedit"/>
      </item>
     </layout>
    </item>
@@ -143,6 +143,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPasswordLineEdit</class>
+   <extends>QWidget</extends>
+   <header>kpasswordlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

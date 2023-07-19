@@ -75,7 +75,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="Username"/>
+      <widget class="QLineEdit" name="UsernameLedit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_3">
@@ -84,9 +84,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="Password"/>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
@@ -94,8 +91,11 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="KPasswordLineEdit" name="PasswordLedit"/>
+     </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="ConfirmPassword"/>
+      <widget class="KPasswordLineEdit" name="ConfirmPasswordLedit"/>
      </item>
     </layout>
    </item>
@@ -153,6 +153,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPasswordLineEdit</class>
+   <extends>QWidget</extends>
+   <header>kpasswordlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

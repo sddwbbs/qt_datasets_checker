@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Sql REQUIRED)  # Add this line to find the Qt SQL module
+find_package(Qt5Sql REQUIRED)
+find_package(KF5WidgetsAddons REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -52,5 +53,10 @@ set_target_properties(qsqlpsql PROPERTIES
         )
 
 # Создаем исполняемый файл qt_http_service с использованием массива сгенерированных файлов UI
-add_executable(qt_http_service ${SOURCE_FILES} ${GENERATED_UI_HEADERS})
-target_link_libraries(qt_http_service Qt5::Widgets Qt5::Sql)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${GENERATED_UI_HEADERS})
+target_link_libraries(${PROJECT_NAME}
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Sql
+        KF5::WidgetsAddons
+        )

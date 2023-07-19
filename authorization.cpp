@@ -23,7 +23,7 @@ Authorization::~Authorization() {
 
 void Authorization::login() {
     QString username = ui->UsernameLedit->text();
-    QString password = ui->PasswordLedit->text();
+    QString password = ui->PasswordLedit->password();
     close();
 }
 

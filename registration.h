@@ -1,11 +1,8 @@
-//
-// Created by sdwbs on 18.07.23.
-//
-
 #ifndef QT_HTTP_SERVICE_REGISTRATION_H
 #define QT_HTTP_SERVICE_REGISTRATION_H
 
 #include <QDialog>
+#include <QStatusBar>
 
 
 QT_BEGIN_NAMESPACE
@@ -21,10 +18,11 @@ public:
     ~Registration() override;
 
 private slots:
-    bool create();
+    void create();
 
 private:
     Ui::Registration *ui;
+    QStatusBar *bar;
 };
 
 

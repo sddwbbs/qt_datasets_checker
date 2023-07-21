@@ -2,6 +2,7 @@
 #define QT_HTTP_SERVICE_MAINWINDOW_H
 
 #include <QMainWindow>
+#include "download.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,8 +16,12 @@ public:
 
     ~MainWindow() override;
 
+private slots:
+    void download();
+
 private:
     Ui::MainWindow *ui;
+    Download *downldWindow;
 };
 
 #endif //QT_HTTP_SERVICE_MAINWINDOW_H

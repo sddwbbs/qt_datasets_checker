@@ -7,12 +7,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
 find_package(KF5WidgetsAddons REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS WebEngineWidgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(SOURCE_FILES main.cpp mainwindow.cpp authorization.cpp registration.cpp)
+set(SOURCE_FILES main.cpp mainwindow.cpp authorization.cpp registration.cpp download.cpp)
 set(UI_FILES authorization.ui mainwindow.ui registration.ui)
 
 # Создаем массив для хранения исходных файлов UI
@@ -59,4 +60,5 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         Qt5::Sql
         KF5::WidgetsAddons
+        Qt5::WebEngineWidgets
         )

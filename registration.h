@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QStatusBar>
+//#include <libpq-fe.h>
+#include <postgresql/libpq-fe.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -18,11 +20,13 @@ public:
     ~Registration() override;
 
 private slots:
-    void create();
+//    void create();
 
 private:
     Ui::Registration *ui;
     QStatusBar *bar;
+
+    PGconn *connectToDB();
 };
 
 

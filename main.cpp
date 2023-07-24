@@ -1,5 +1,4 @@
 #include "authorization.h"
-#include "mainwindow.h"
 
 #include <QApplication>
 

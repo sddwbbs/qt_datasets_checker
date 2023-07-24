@@ -61,6 +61,8 @@
     <property name="title">
      <string>Dataset</string>
     </property>
+    <addaction name="actionDelete_the_entire_dataset"/>
+    <addaction name="actionDelete_selected_files"/>
    </widget>
    <addaction name="menuOpen"/>
    <addaction name="menuEdit"/>
@@ -98,7 +100,8 @@
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -106,7 +109,8 @@
   </action>
   <action name="actionDownload">
    <property name="icon">
-    <iconset theme="download"/>
+    <iconset theme="download">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Download</string>
@@ -114,7 +118,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -138,6 +143,16 @@
   <action name="actionDelete_row">
    <property name="text">
     <string>Delete row</string>
+   </property>
+  </action>
+  <action name="actionDelete_the_entire_dataset">
+   <property name="text">
+    <string>Delete the entire dataset</string>
+   </property>
+  </action>
+  <action name="actionDelete_selected_files">
+   <property name="text">
+    <string>Delete selected files</string>
    </property>
   </action>
  </widget>

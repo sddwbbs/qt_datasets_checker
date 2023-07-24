@@ -16,8 +16,8 @@ Download::Download(QWidget *parent) :
             this, &Download::download);
 
     // Добавляем кнопки "Назад" и "Вперед" и соединяем их с соответствующими обработчиками событий
-    QPushButton *backButton = new QPushButton("Назад", this);
-    QPushButton *forwardButton = new QPushButton("Вперед", this);
+    auto *backButton = new QPushButton("Назад", this);
+    auto *forwardButton = new QPushButton("Вперед", this);
 
     connect(backButton, &QPushButton::clicked, this, &Download::goBack);
     connect(forwardButton, &QPushButton::clicked, this, &Download::goForward);
@@ -56,7 +56,6 @@ void Download::checkUrl(const QUrl &url) {
         *urlToDownload = url.toString();
     }
 
-    // Проверяем URL на условие
     if (url.toString().startsWith("https://www.kaggle.com/account/login?titleType=dataset-downloads")) {
         ui->webEngineView->setHtml("");
         QMessageBox::StandardButton ret;
@@ -68,7 +67,6 @@ void Download::checkUrl(const QUrl &url) {
             ui->webEngineView->back();
             *temp = urlToDownload->toStdString();
             *temp = temp->substr(32, temp->length() - 1);
-            //QMessageBox::warning(this, "URL", QString::fromStdString(*temp));
             std::string sysCall = "";
             sysCall = "cd /home/sdwbs/CLionProjects/qt_http_service && source myenv/bin/activate && kaggle datasets download " + *temp + " -p /home/sdwbs/CLionProjects/qt_http_service/Datasets/" + temp->substr(temp->find("/"), temp->length() - 1) + "/ --unzip";
             QMessageBox::warning(this, "URL", QString::fromStdString(sysCall));
@@ -78,8 +76,4 @@ void Download::checkUrl(const QUrl &url) {
             ui->webEngineView->back();
         }
     }
-
 }
-
-//kaggle datasets download bhanupratapbiswas/uber-data-analysis -p /home/sdwbs/Downloads --unzip
-

@@ -13,7 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(SOURCE_FILES main.cpp mainwindow.cpp authorization.cpp registration.cpp download.cpp)
+set(SOURCE_FILES main.cpp mainwindow.cpp authorization.cpp registration.cpp download.cpp DataModel.cpp MdiChild.cpp)
 set(UI_FILES authorization.ui mainwindow.ui registration.ui)
 
 # Создаем массив для хранения исходных файлов UI
@@ -61,4 +61,5 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Sql
         KF5::WidgetsAddons
         Qt5::WebEngineWidgets
+        pq
         )

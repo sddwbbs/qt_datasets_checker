@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QStyle>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -9,8 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
              this, &MainWindow::download);
     connect (ui->actionExit, &QAction::triggered,
              this, &QApplication::quit);
-    connect(ui->actionOpen, &QAction::triggered,
+    connect (ui->actionOpen, &QAction::triggered,
             this, &MainWindow::open);
+
+    ui->actionDownload->setIcon(style()->standardIcon(QStyle::SP_ArrowDown));
+    ui->actionExit->setIcon(style()->standardIcon(QStyle::SP_DialogCloseButton));
+    ui->actionOpen->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
+    ui->actionSave->setIcon(style()->standardIcon(QStyle::SP_DialogSaveButton));
+
+    resize(1500, 1000);
 }
 
 MainWindow::~MainWindow() {
@@ -19,7 +27,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::download() {
     downldWindow = new Download(this);
-   downldWindow->exec();
+   downldWindow->show();
 }
 
 void MainWindow::open() {

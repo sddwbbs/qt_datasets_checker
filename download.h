@@ -2,6 +2,7 @@
 #define QT_HTTP_SERVICE_DOWNLOAD_H
 
 #include <QDialog>
+#include <QPropertyAnimation>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Download; }
@@ -21,10 +22,12 @@ private slots:
     void goForward();
     void checkUrl(const QUrl &url);
 
+
 private:
     Ui::Download *ui;
     QString *urlToDownload = new(QString);
     std::string *temp = new(std::string);
+    QPropertyAnimation *animation;
 };
 
 

@@ -3,7 +3,6 @@
 
 #include <QUrl>
 #include <QMessageBox>
-#include <QPushButton>
 #include <string>
 
 Download::Download(QWidget *parent) :
@@ -15,20 +14,15 @@ Download::Download(QWidget *parent) :
     connect(ui->actionDownload, &QAction::triggered,
             this, &Download::download);
 
-    // Добавляем кнопки "Назад" и "Вперед" и соединяем их с соответствующими обработчиками событий
-    auto *backButton = new QPushButton("Назад", this);
-    auto *forwardButton = new QPushButton("Вперед", this);
-
-    connect(backButton, &QPushButton::clicked, this, &Download::goBack);
-    connect(forwardButton, &QPushButton::clicked, this, &Download::goForward);
-
-    // Помещаем кнопки в нужные позиции на форме
-    ui->verticalLayout->addWidget(backButton);
-    ui->verticalLayout->addWidget(forwardButton);
+    connect(ui->actionBack, &QAction::triggered, this, &Download::goBack);
+    connect(ui->actionForward, &QAction::triggered, this, &Download::goForward);
 
     // Соединяем сигнал urlChanged с соответствующим слотом
     connect(ui->webEngineView, &QWebEngineView::urlChanged,
             this, &Download::checkUrl);
+
+    this->setWindowFlags(Qt::Window);
+    resize(1800, 1100);
 }
 
 Download::~Download() {
@@ -59,16 +53,15 @@ void Download::checkUrl(const QUrl &url) {
     if (url.toString().startsWith("https://www.kaggle.com/account/login?titleType=dataset-downloads")) {
         ui->webEngineView->setHtml("");
         QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, "download", "Do you want to download this dataset?",
-                                   QMessageBox::Ok | QMessageBox::Discard
-                                   | QMessageBox::Cancel);
-        if (ret == QMessageBox::Ok) {
+        ret = QMessageBox::question(this, "download", "Do you want to download this dataset?",
+                                   QMessageBox::Yes | QMessageBox::No);
+        if (ret == QMessageBox::Yes) {
             ui->webEngineView->back();
             ui->webEngineView->back();
             *temp = urlToDownload->toStdString();
             *temp = temp->substr(32, temp->length() - 1);
             std::string sysCall = "";
-            sysCall = "cd /home/sdwbs/CLionProjects/qt_http_service && source myenv/bin/activate && kaggle datasets download " + *temp + " -p /home/sdwbs/CLionProjects/qt_http_service/Datasets/" + temp->substr(temp->find("/"), temp->length() - 1) + "/ --unzip";
+            sysCall = "cd /app/Datasets && source myenv/bin/activate && kaggle datasets download " + *temp + " -p /home/sdwbs/CLionProjects/qt_http_service/Datasets/" + temp->substr(temp->find("/"), temp->length() - 1) + "/ --unzip";
             QMessageBox::warning(this, "URL", QString::fromStdString(sysCall));
             system(sysCall.c_str());
         } else {

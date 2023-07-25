@@ -13,8 +13,8 @@ Registration::Registration(QWidget *parent) :
 
     resize(700, 400);
 
-//    connect(ui->actionCreate, &QAction::triggered,
-//            this, &Registration::create);
+    connect(ui->actionCreate, &QAction::triggered,
+            this, &Registration::create);
 
     PGconn *conn = connectToDB();
 
@@ -27,8 +27,8 @@ Registration::Registration(QWidget *parent) :
     }
 }
 
-PGconn* Registration::connectToDB() {
-    const char *conninfo = "dbname=user_accounts user=postgres password=postgres hostaddr=172.21.0.2 port=5432";
+PGconn* Registration::connectToDB() { //172.21.0.2   127.0.0.1
+    const char *conninfo = "dbname=postgres user=postgres password=postgres hostaddr=172.20.0.2 port=5432";
     PGconn *conn = PQconnectdb(conninfo);
 
     // Проверяем состояние подключения
@@ -41,85 +41,72 @@ PGconn* Registration::connectToDB() {
     return conn;
 }
 
-//#include <QSqlDatabase>
-//#include <QtSql>
-//
-//#include <libpq-fe.h>
-//
-//#include "registration.h"
-//#include "ui_registration.h"
-//#include <QAction>
-//#include <QString>
-//#include <QMessageBox>
-//
-//Registration::Registration(QWidget *parent) :
-//        QDialog(parent), ui(new Ui::Registration) {
-//    ui->setupUi(this);
-//    bar = new QStatusBar(this);
-//    ui->formLayout->addWidget(bar);
-//
-//    resize(700, 400);
-//
-//    connect(ui->actionCreate, &QAction::triggered,
-//            this, &Registration::create);
-//
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-//
-////    db.setPassword("postgres");
-////    db.setDatabaseName("user_accounts");
-////    db.setUserName("postgres");
-//
-//    db.setHostName("localhost"); // Замените на имя хоста или IP-адрес контейнера с PostgreSQL
-//    db.setPort(5432); // Укажите порт, на котором запущен PostgreSQL в контейнере (по умолчанию 5432)
-//    db.setDatabaseName("user_accounts"); // Укажите имя базы данных
-//    db.setUserName("postgres"); // Укажите имя пользователя базы данных
-//    db.setPassword("postgres"); // Укажите пароль для пользователя базы данных
-//
-//    if (!db.open()) {
-//        bar->showMessage("error connecting to db klfjalkf", 1500);
-//    } else {
-//        bar->showMessage("stable connection 14134", 1500);
-//    }
-//}
 
 Registration::~Registration() {
     delete ui;
 }
 
-//void Registration::create() {
-//    QString username = ui->UsernameLedit->text();
-//    QString password = ui->PasswordLedit->password();
-//    QString confirmPassword = ui->ConfirmPasswordLedit->password();
-//
-//    QSqlQuery selectQuery;
-//    selectQuery.prepare("SELECT username FROM accounts WHERE username = ?");
-//    selectQuery.addBindValue(username);
-//
-//    if (!selectQuery.exec()) {
-//        bar->showMessage("error while querying data", 2500);
-//        return;
-//    }
-//
-//    if (selectQuery.next()) {
-//        bar->showMessage("username already exists", 2500);
-//        return;
-//    }
-//
-//    if (confirmPassword != password) {
-//        bar->showMessage("passwords must match", 2500);
-//        return;
-//    }
-//
-//    // Здесь можно создать нового пользователя
-//    QSqlQuery insertQuery;
-//    insertQuery.prepare("INSERT INTO accounts (username, password) VALUES (?, ?)");
-//    insertQuery.addBindValue(username);
-//    insertQuery.addBindValue(password);
-//
-//    if (!insertQuery.exec()) {
-//        bar->showMessage("error while inserting data");
-//        return;
-//    }
-//
-//    QMessageBox::warning(this, "registration", "registration successful");
-//}
+void Registration::create() {
+    QString username = ui->UsernameLedit->text();
+    QString password = ui->PasswordLedit->password();
+    QString confirmPassword = ui->ConfirmPasswordLedit->password();
+
+    PGconn *conn = PQconnectdb("dbname=postgres user=postgres password=postgres hostaddr=172.20.0.2 port=5432");
+
+    if (PQstatus(conn) != CONNECTION_OK) {
+        bar->showMessage("Error connecting to the database");
+        PQfinish(conn);
+        return;
+    }
+
+    const char *selectSql = "SELECT username FROM accounts WHERE username = $1";
+    const char *selectParamValues[1] = {username.toStdString().c_str()};
+    const int selectParamLengths[1] = {static_cast<int>(strlen(selectParamValues[0]))};
+    const int selectParamFormats[1] = {0};
+
+    PGresult *selectResult = PQexecParams(conn, selectSql, 1, nullptr, selectParamValues, selectParamLengths, selectParamFormats, 0);
+
+    if (PQresultStatus(selectResult) != PGRES_TUPLES_OK) {
+        bar->showMessage("Error while selecting data");
+        PQclear(selectResult);
+        PQfinish(conn);
+        return;
+    }
+
+    int numRows = PQntuples(selectResult);
+
+    if (numRows > 0) {
+        bar->showMessage("Username already exists", 2500);
+        PQclear(selectResult);
+        PQfinish(conn);
+        return;
+    }
+
+    PQclear(selectResult);
+
+    if (confirmPassword != password) {
+        bar->showMessage("Passwords must match", 2500);
+        PQfinish(conn);
+        return;
+    }
+
+    const char *insertSql = "INSERT INTO accounts (username, password) VALUES ($1, $2)";
+    const char *insertParamValues[2] = {username.toStdString().c_str(), password.toStdString().c_str()};
+    const int insertParamLengths[2] = {static_cast<int>(strlen(insertParamValues[0])),
+                                       static_cast<int>(strlen(insertParamValues[1]))};
+    const int insertParamFormats[2] = {0, 0};
+
+    PGresult *insertResult = PQexecParams(conn, insertSql, 2, nullptr, insertParamValues, insertParamLengths, insertParamFormats, 0);
+
+    if (PQresultStatus(insertResult) != PGRES_COMMAND_OK) {
+        bar->showMessage("Error while inserting data");
+        PQclear(insertResult);
+        PQfinish(conn);
+        return;
+    }
+
+    PQclear(insertResult);
+    PQfinish(conn);
+
+    QMessageBox::warning(this, "Registration", "Registration successful");
+}

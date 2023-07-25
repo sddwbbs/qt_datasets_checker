@@ -20,7 +20,7 @@ public:
     ~Registration() override;
 
 private slots:
-//    void create();
+    void create();
 
 private:
     Ui::Registration *ui;

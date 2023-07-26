@@ -27,8 +27,8 @@ Registration::Registration(QWidget *parent) :
     }
 }
 
-PGconn* Registration::connectToDB() { //172.21.0.2   127.0.0.1
-    const char *conninfo = "dbname=postgres user=postgres password=postgres hostaddr=172.20.0.2 port=5432";
+PGconn* Registration::connectToDB() {
+    const char *conninfo = "dbname=postgres user=postgres password=postgres host=db port=5432";
     PGconn *conn = PQconnectdb(conninfo);
 
     // Проверяем состояние подключения
@@ -51,7 +51,7 @@ void Registration::create() {
     QString password = ui->PasswordLedit->password();
     QString confirmPassword = ui->ConfirmPasswordLedit->password();
 
-    PGconn *conn = PQconnectdb("dbname=postgres user=postgres password=postgres hostaddr=172.20.0.2 port=5432");
+    PGconn *conn = PQconnectdb("dbname=postgres user=postgres password=postgres host=db port=5432");
 
     if (PQstatus(conn) != CONNECTION_OK) {
         bar->showMessage("Error connecting to the database");

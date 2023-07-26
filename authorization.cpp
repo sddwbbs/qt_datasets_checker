@@ -30,7 +30,7 @@ void Authorization::login() {
     QString username = ui->UsernameLedit->text();
     QString password = ui->PasswordLedit->password();
 
-    PGconn *conn = PQconnectdb("dbname=postgres user=postgres password=postgres hostaddr=172.20.0.2 port=5432");
+    PGconn *conn = PQconnectdb("dbname=postgres user=postgres password=postgres host=db port=5432");
 
     if (PQstatus(conn) != CONNECTION_OK) {
         QApplication::restoreOverrideCursor();

@@ -32,8 +32,7 @@ services:
     ports:
       - "1234:1234"
     networks:
-      app-network:
-        ipv4_address: 172.20.0.2
+      - app-network
 
 networks:
   app-network:

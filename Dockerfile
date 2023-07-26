@@ -72,10 +72,16 @@ RUN apt-get update -y && \
     postgresql-contrib \
     x11-xserver-utils \
     libpq-dev \
+    python3-pip \
+    python3 \
     gettext -y
 
 COPY . /app
+RUN mkdir /root/.kaggle
+COPY kaggle.json /root/.kaggle
 WORKDIR /app
+
+RUN pip install kaggle
 
 RUN rm -rf build && \
     mkdir build && \

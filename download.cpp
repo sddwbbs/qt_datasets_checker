@@ -61,7 +61,7 @@ void Download::checkUrl(const QUrl &url) {
             *temp = urlToDownload->toStdString();
             *temp = temp->substr(32, temp->length() - 1);
             std::string sysCall = "";
-            sysCall = "cd /app/Datasets && source myenv/bin/activate && kaggle datasets download " + *temp + " -p /home/sdwbs/CLionProjects/qt_http_service/Datasets/" + temp->substr(temp->find("/"), temp->length() - 1) + "/ --unzip";
+            sysCall = "kaggle datasets download " + *temp + " -p /app/Datasets/" + temp->substr(temp->find("/"), temp->length() - 1) + "/ --unzip";
             QMessageBox::warning(this, "URL", QString::fromStdString(sysCall));
             system(sysCall.c_str());
         } else {

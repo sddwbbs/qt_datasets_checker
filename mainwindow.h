@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "download.h"
 #include "MdiChild.h"
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,9 @@ private slots:
     void open();
 
     MdiChild *createMdiChild();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     Ui::MainWindow *ui;

@@ -25,6 +25,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    QApplication::quit();
+    event->accept();
+}
+
 void MainWindow::download() {
     downldWindow = new Download(this);
    downldWindow->show();
@@ -34,7 +39,7 @@ void MainWindow::open() {
     QFileDialog *fDialog = new QFileDialog(this);
     fDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QString fileName = fDialog->getOpenFileName(this, "Open Document", QDir::cleanPath("/home/sdwbs/CLionProjects/qt_http_service/Datasets/"),
+    QString fileName = fDialog->getOpenFileName(this, "Open Document", QDir::cleanPath("/app/Datasets/"),
                                                 "CSV files (*.csv)", nullptr, QFileDialog::DontUseNativeDialog);
 
     if (fileName.isEmpty()) {

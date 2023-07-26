@@ -26,6 +26,7 @@ services:
       - "db-data:/var/lib/postgresql/data"
     environment:
       POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: user_accounts
     expose:
       - "1234"
@@ -39,3 +40,4 @@ networks:
 
 volumes:
   db-data:
+

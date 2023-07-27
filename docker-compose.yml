@@ -12,7 +12,7 @@ services:
       - db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: user_accounts
+      POSTGRES_DB: postgres
       DISPLAY: $DISPLAY  # Set the DISPLAY environment variable
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix  # Mount the X11 Unix domain socket
@@ -24,10 +24,11 @@ services:
     container_name: my-db
     volumes:
       - "db-data:/var/lib/postgresql/data"
+      - "./create_db_table.sql:/docker-entrypoint-initdb.d/create_db_table.sql"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: user_accounts
+      POSTGRES_DB: postgres
     expose:
       - "1234"
     ports:

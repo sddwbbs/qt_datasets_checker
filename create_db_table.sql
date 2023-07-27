@@ -1,10 +1,10 @@
 -- create_db_table.sql
 
 -- Create the database 'user_accounts'
-CREATE DATABASE user_accounts;
+--CREATE DATABASE user_accounts;
 
 -- Connect to the 'user_accounts' database
-\c user_accounts;
+--\c user_accounts;
 
 -- Create the 'accounts' table
 CREATE TABLE accounts (

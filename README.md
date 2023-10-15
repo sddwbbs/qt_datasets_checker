@@ -2,6 +2,8 @@
 
 An application written in C++ using the Qt library, built with the CMake build system, and utilizing a PostgreSQL database to store user account data. The application and database run within Docker containers. 
 Its primary function is to download and display datasets from https://www.kaggle.com/.
+![Screenshot from 2023-10-15 16-23-31](https://github.com/sddwbbs/qt_application/assets/75004864/88b439d7-3038-4869-b158-729375cf1429)
+![Screenshot from 2023-10-15 16-23-49](https://github.com/sddwbbs/qt_application/assets/75004864/4e1cb71e-04d2-4678-970f-0b6b46b24736)
 
 ## Installation 
 
